@@ -23,9 +23,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: current dir
+        shell: bash
+        run: "$(pwd)"
       - name: check dir
         shell: bash
-        run: "$(pwd) && ls -al "
+        run: "ls -al"
       - name: test
         shell: bash
         run: "echo linting"
@@ -120,7 +123,7 @@ jobs:
         run: "echo linting"
 
   source-branch:
-    name: kich when merged
+    name: kick when merged
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
     steps:
