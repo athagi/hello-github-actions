@@ -51,6 +51,52 @@ jobs:
         shell: bash
         run: "echo linting"
 
+  sharing-variables-among-jobs:
+    name: sharing variables between jobs
+    runs-on: ubuntu-latest
+    steps:
+      - shell: bash
+        run: |
+          expr 3 + 7 > math-homework.txt
+      - name: Upload math result for job 1
+        uses: actions/upload-artifact@v1
+        with:
+          name: homework
+          path: math-homework.txt
+  using-variables-among-jobs:
+    name: Multiply by 9
+    needs: sharing-variables-among-jobs
+    runs-on: windows-latest
+    steps:
+      - name: Download math result for job 1
+        uses: actions/download-artifact@v1
+        with:
+          name: homework
+      - shell: bash
+        run: |
+          value=`cat homework/math-homework.txt`
+          expr $value \* 9 > homework/math-homework.txt
+      - name: Upload math result for job 2
+        uses: actions/upload-artifact@v1
+        with:
+          name: homework
+          path: homework/math-homework.txt
+
+  display-variables-among-jobs:
+    name: Display results
+    needs: using-variables-among-jobs
+    runs-on: macOS-latest
+    steps:
+      - name: Download math result for job 2
+        uses: actions/download-artifact@v1
+        with:
+          name: homework
+      - name: Print the final result
+        shell: bash
+        run: |
+          value=`cat homework/math-homework.txt`
+          echo The result is $value
+
   delivery:
     name: delivery
     runs-on: ubuntu-latest
@@ -58,9 +104,6 @@ jobs:
       - build
 
     steps:
-      - name: echo branch name
-        shell: bash
-        run: "echo ${{ jobs.build.steps.extract_branch.outputs.branch }}"
       - name: delivery
         shell: bash
         run: "echo linting"
