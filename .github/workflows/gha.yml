@@ -60,9 +60,6 @@ jobs:
     steps:
       - name: echo branch name
         shell: bash
-        run: "echo ${{ build.steps.extract_branch.outputs.branch }}"
-      - name: echo branch name
-        shell: bash
         run: "echo ${{ jobs.build.steps.extract_branch.outputs.branch }}"
       - name: delivery
         shell: bash
