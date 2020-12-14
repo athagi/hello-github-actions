@@ -25,7 +25,7 @@ jobs:
     steps:
       - name: current dir
         shell: bash
-        run: "$(pwd)"
+        run: "pwd"
       - name: check dir
         shell: bash
         run: "ls -al"
