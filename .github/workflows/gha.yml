@@ -33,7 +33,7 @@ jobs:
         run: "echo linting"
       - run: env
       - run: echo ${GITHUB_BASE_REF}
-      - run: echo ${{ github }}
+      - run: ${{ toJson(github) }}
 
   build:
     name: build
