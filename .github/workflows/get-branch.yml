@@ -22,7 +22,7 @@ jobs:
   on-pull-request:
     name: get branch name on PR
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged == true
+    if: github.event.pull_request
     steps:
       - run: echo "${GITHUB_REF#refs/heads/}" # PRの番号が取得されてしまいます
       - run: echo "${GITHUB_HEAD_REF}"
