@@ -3,7 +3,7 @@ on:
   push:
   pull_request:
     branches:
-      - ${{ github.event.repository.default_branch }}
+      - main
 jobs:
   on-push:
     name: get branch name on push
