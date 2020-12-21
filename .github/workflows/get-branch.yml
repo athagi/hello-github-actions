@@ -1,0 +1,37 @@
+name: getting branch name
+on:
+  push:
+
+jobs:
+  on-push:
+    name: get branch name on push
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo "${GITHUB_REF#refs/heads/}"
+      - run: echo "${{ github.ref }}"
+      - run: echo "${GITHUB_REF_CONTEXT#refs/heads/}"
+      - run: echo '${{ toJson(github) }}'
+      - run: env
+    env:
+      GITHUB_REF_CONTEXT: ${{ github.ref }}
+
+  on-pull-request:
+    name: get branch name on PR
+    runs-on: ubuntu-latest
+    if: github.event.pull_request
+    steps:
+      - run: echo "${GITHUB_REF#refs/heads/}" # PRの番号が取得されてしまいます
+      - run: echo "${GITHUB_HEAD_REF}"
+      - run: echo '${{ toJson(github) }}'
+      - run: env
+
+  on-merged:
+    name: get branch name after merged
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - run: echo "${GITHUB_REF#refs/heads/}" # PRの番号が取得されてしまいます
+      - run: echo "${GITHUB_HEAD_REF}"
+      - run: echo '${{ toJson(github) }}'
+      - run: env
