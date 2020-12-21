@@ -23,6 +23,7 @@ jobs:
     steps:
       - run: echo "${GITHUB_REF#refs/heads/}" # PRの番号が取得されてしまいます
       - run: echo "${GITHUB_HEAD_REF}"
+      - run: echo "${{ github.head.ref }}"
       - run: echo '${{ toJson(github) }}'
       - run: env
 
@@ -31,7 +32,6 @@ jobs:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     steps:
-      - run: echo "${GITHUB_REF#refs/heads/}" # PRの番号が取得されてしまいます
-      - run: echo "${GITHUB_HEAD_REF}"
+      - run: echo "${GITHUB_REF#refs/heads/}"
       - run: echo '${{ toJson(github) }}'
       - run: env
