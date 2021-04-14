@@ -1,0 +1,1 @@
+Add drag distance for move-by-titlebar to process double click right
